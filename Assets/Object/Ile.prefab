@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5937691035634264681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6638822765532996046}
+  - component: {fileID: 9153956218580765700}
+  m_Layer: 0
+  m_Name: Ile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6638822765532996046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5937691035634264681}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9153956218580765700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5937691035634264681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239687a9e7773554ca4f4407260b5e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _biomeMats:
+  - {fileID: 2100000, guid: 0c1bcda406f997a48b0c70a2009d59d0, type: 2}
+  - {fileID: 2100000, guid: 9d4fe659acd03864fbf7a0b3649a29c4, type: 2}
+  - {fileID: 2100000, guid: 868eb885adf0b65458ba941bc32c598d, type: 2}
+  - {fileID: 2100000, guid: 4cdae89c2d21ec2448c056fe8ad1e476, type: 2}
+  - {fileID: 2100000, guid: db0e161a191fbe44eb96b166270776e1, type: 2}
+  - {fileID: 2100000, guid: 13c4701aacb57c24e9f1fda6dca2cc0b, type: 2}
+  - {fileID: 2100000, guid: 131e8b38ddfb6e94fb386f5784981345, type: 2}
+  shaderGraphMaterial: {fileID: 0}
+  generationEffect: {fileID: 0}
+  _cube: {fileID: 5202586986712453481, guid: 516b44fa5107bc54ca6baff7ef6d2e9f, type: 3}
+  textureRender: {fileID: 0}
+  _prefabPersonnage: {fileID: 8042654400404435520, guid: 484dd24d63c08f047b6d148e595919b1, type: 3}
+  _nombrePersonnages: 150
