@@ -7,35 +7,33 @@ public class EnnemyEtatManager : MonoBehaviour
     private EnnemyEtatBase _etatActuel;
 
     public EnnemyEtatChasse chasse = new EnnemyEtatChasse(); //pourchasser le perso/joueur
-    public EnnemieEtatActivable activable = new EnnemieEtatActivable(); //pourchasser le perso/joueur
     public EnnemieEtatAttaque attaque = new EnnemieEtatAttaque(); //promenade aléatoire ou vers ressources
     public EnnemyEtatRepos repos = new EnnemyEtatRepos(); // attendre (écoute si perso entre dans champ vision)
-    public EnnemyEtatCuillette cuillette = new EnnemyEtatCuillette(); // vole des ressources
+    public EnnemieEtatActivable activable = new EnnemieEtatActivable(); //pourchasser le perso/joueur
 
     public NavMeshAgent _agentNavigation;
+    public Animator _animator { get; set; }  //composant animator
 
     public GameObject _personnage;
 
-    
+
     // public NavMeshSurface _agentNavigation {get; set;} //composant de navigation
-    public Dictionary<string, dynamic> _infos  { get; set; } = new Dictionary<string, dynamic>();//dictionnaire
-    public Animator _animator {get; set;}  //composant animator
+    public Dictionary<string, dynamic> _infos { get; set; } = new Dictionary<string, dynamic>();//dictionnaire
 
     void Start()
     {
         _animator = GetComponent<Animator>();
         _agentNavigation = GetComponent<NavMeshAgent>();
 
-        ChangerEtat(chasse);  
-        // transform.rotation(new Vector3(0,Random.Range(0,360),0));
-        _etatActuel = repos;
+        _etatActuel = activable;
+        _etatActuel.InitEtat(this);
     }
 
-    public void ChangerEtat(EnnemyEtatBase etat)
+    public void ChangerEtat(EnnemyEtatBase nouvelEtat)
     {
-        // _etatActuel.ExitEtat(this);
-        _etatActuel = etat;
-        _etatActuel.InitEtat(this);
+        if (_etatActuel != null) _etatActuel.ExitEtat(this); // Nettoyer l'état actuel
+        _etatActuel = nouvelEtat;
+        if (_etatActuel != null)  _etatActuel.InitEtat(this); // Initialiser le nouvel état
     }
 
     void Update()
@@ -45,6 +43,6 @@ public class EnnemyEtatManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        _etatActuel.TriggerEnterEtat(this, other);
+        if (_etatActuel != null) _etatActuel.TriggerEnterEtat(this, other);
     }
 }

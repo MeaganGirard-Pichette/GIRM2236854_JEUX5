@@ -1,51 +1,60 @@
 using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
 
 public class EnnemyEtatChasse : EnnemyEtatBase
 {
-
-    // public Transform perso;
-    // public Transform bases;
-    // public NavMeshAgent agent;
-    // private Transform goal;
-
-
     public override void InitEtat(EnnemyEtatManager ennemy)
     {
-        // goal = perso;
-        // InvokeRepeating("EnChasse", 3f, 2f);
-        // Initialisation de l'état de chasse
-        // ennemy.StartCoroutine(EnChasse(ennemy));
+        Debug.Log("Ennemi en état de chasse");
+        ennemy._animator.SetBool("enCourse", true);
+        ennemy._animator.SetBool("enAttaque", false);
+
+        ennemy.StartCoroutine(CouroutineChasse(ennemy));
     }
 
-    public override void UpdateEtat(EnnemyEtatManager ennemy)
+    public override void ExitEtat(EnnemyEtatManager ennemy)
     {
-        // Logique de mise à jour de l'état de chasse
+        ennemy.StopAllCoroutines();
     }
+
+    public override void UpdateEtat(EnnemyEtatManager ennemy) { }
 
     public override void TriggerEnterEtat(EnnemyEtatManager ennemy, Collider other)
     {
-        // Logique lors de l'entrée dans le trigger en état de chasse
+        if (other.gameObject == ennemy._personnage)
+        {
+            ennemy.ChangerEtat(ennemy.attaque);
+        }
     }
 
-    private IEnumerator EnChasse(EnnemyEtatManager ennemy){
-
-        ennemy._animator.SetBool("enCourse", true);
-        ennemy._agentNavigation.SetDestination(ennemy._personnage.transform.position);
-        if (ennemy._agentNavigation.remainingDistance < 1f)
+    public IEnumerator CouroutineChasse(EnnemyEtatManager ennemy)
+    {
+        while (true)
         {
-            ennemy._animator.SetBool("enCourse", false);
-        }
-        else
-        {
-            ennemy._animator.SetBool("enCourse", true);
-        }
+            if (ennemy._personnage == null)
+            {
+                ennemy.ChangerEtat(ennemy.repos);
+                yield break;
+            }
 
+            Vector3 target = ennemy._personnage.transform.position;
+            ennemy._agentNavigation.SetDestination(target);
 
-        return null;
+            float distance = Vector3.Distance(ennemy.transform.position, target);
+
+            if (distance < 2f)
+            {
+                ennemy.ChangerEtat(ennemy.attaque);
+                yield break;
+            }
+
+            if (distance > 15f)
+            {
+                ennemy.ChangerEtat(ennemy.repos);
+                yield break;
+            }
+
+            yield return null;
+        }
     }
-
-   
 }
-

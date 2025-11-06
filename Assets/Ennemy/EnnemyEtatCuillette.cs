@@ -9,6 +9,10 @@ public class EnnemyEtatCuillette : EnnemyEtatBase
         // Initialisation de l'état de cuillette
     }
 
+    public override void ExitEtat(EnnemyEtatManager ennemy)
+    {
+        // Nettoyage quand on change d'état
+    }
 
     public override void UpdateEtat(EnnemyEtatManager ennemy)
     {

@@ -61,7 +61,6 @@ public class GenerateurÎle : MonoBehaviour
         InitIsLand(Vector3.zero, 250, 250, 10, 15, 99, 15, true);//en ordre de ligne 43//InitIsLand
         // StartCoroutine(InfosMonde());
 
-        GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
 
@@ -316,12 +315,11 @@ public class GenerateurÎle : MonoBehaviour
                     unCube.GetComponent<BiomeEtatManager>().infos.Add("quelBiomes", quelBiomes + 1);
                     unCube.GetComponent<BiomeEtatManager>().infos.Add("quelVariante", +quelVariante + 1);
 
-                    Debug.Log("Biome:" + (quelBiomes + 1) + " Variante:" + (quelVariante + 1));
-
-                   
-
-
+                    // Debug.Log("Biome:" + (quelBiomes + 1) + " Variante:" + (quelVariante + 1));
                     unCube.transform.parent = this.transform;// Attachment du cube comme enfant de ce GameObject pour l'organisation
+
+                    GetComponent<NavMeshSurface>().BuildNavMesh();
+
                 }
             }
             // Pause configurable entre chaque ligne pour permettre l'affichage progressif
