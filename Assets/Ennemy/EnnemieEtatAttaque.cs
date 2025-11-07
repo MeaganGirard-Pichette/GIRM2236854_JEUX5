@@ -5,46 +5,52 @@ public class EnnemieEtatAttaque : EnnemyEtatBase
 {
     public override void InitEtat(EnnemyEtatManager ennemy)
     {
-        Debug.Log("Ennemi en état d'attaque");
-        ennemy._animator.SetBool("enCourse", false);
         ennemy._animator.SetBool("enAttaque", true);
-
-        ennemy.StartCoroutine(CouroutineAttaque(ennemy));
+        Debug.Log("Ennemy en état Attaque");
+        ennemy.StartCoroutine(CoroutineAttaque(ennemy));
     }
 
     public override void ExitEtat(EnnemyEtatManager ennemy)
     {
-        ennemy.StopAllCoroutines();
+        ennemy._animator.SetBool("enAttaque", false);
     }
 
-    public override void UpdateEtat(EnnemyEtatManager ennemy) { }
+    public override void UpdateEtat(EnnemyEtatManager ennemy)
+    {
+    }
 
     public override void TriggerEnterEtat(EnnemyEtatManager ennemy, Collider other)
     {
-        // Rien ici pour l'instant
     }
 
-    public IEnumerator CouroutineAttaque(EnnemyEtatManager ennemy)
+    public IEnumerator CoroutineAttaque(EnnemyEtatManager ennemy)
     {
-        while (true)
+        float attackDistance = 2f;
+        float chaseDistance = 10f;
+
+        while (ennemy._etatActuel == this && ennemy._personnage != null)
         {
-            if (ennemy._personnage == null)
+            float distance = Vector3.Distance(ennemy.transform.position, ennemy._personnage.transform.position);
+
+            if (distance > chaseDistance)
             {
+                // Joueur trop loin, retour à repos
                 ennemy.ChangerEtat(ennemy.repos);
                 yield break;
             }
-
-            float distance = Vector3.Distance(ennemy.transform.position, ennemy._personnage.transform.position);
-
-            if (distance > 3f)
+            else if (distance > attackDistance)
             {
+                // Joueur un peu loin, retour en chasse
                 ennemy.ChangerEtat(ennemy.chasse);
                 yield break;
             }
+            else
+            {
+                // Ici tu peux ajouter la logique d'attaque (ex: infliger des dégâts)
+                Debug.Log("Ennemy attaque le joueur");
+            }
 
-            // Ici tu peux ajouter le code pour infliger des dégâts
-            Debug.Log("Attaque le joueur !");
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.3f);
         }
     }
 }

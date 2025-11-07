@@ -5,56 +5,54 @@ public class EnnemyEtatChasse : EnnemyEtatBase
 {
     public override void InitEtat(EnnemyEtatManager ennemy)
     {
-        Debug.Log("Ennemi en état de chasse");
         ennemy._animator.SetBool("enCourse", true);
-        ennemy._animator.SetBool("enAttaque", false);
-
-        ennemy.StartCoroutine(CouroutineChasse(ennemy));
+        Debug.Log("Ennemy en état Chasse");
+        ennemy.StartCoroutine(CoroutineChasse(ennemy));
     }
 
     public override void ExitEtat(EnnemyEtatManager ennemy)
     {
-        ennemy.StopAllCoroutines();
+        ennemy._agentNavigation.ResetPath();
+        ennemy._animator.SetBool("enCourse", false);
     }
 
-    public override void UpdateEtat(EnnemyEtatManager ennemy) { }
+    public override void UpdateEtat(EnnemyEtatManager ennemy)
+    {
+    }
 
     public override void TriggerEnterEtat(EnnemyEtatManager ennemy, Collider other)
     {
-        if (other.gameObject == ennemy._personnage)
-        {
-            ennemy.ChangerEtat(ennemy.attaque);
-        }
     }
 
-    public IEnumerator CouroutineChasse(EnnemyEtatManager ennemy)
+    public IEnumerator CoroutineChasse(EnnemyEtatManager ennemy)
     {
-        while (true)
+        float loseDistance = 15f;
+        float attackDistance = 2f;
+
+        while (ennemy._etatActuel == this && ennemy._personnage != null)
         {
-            if (ennemy._personnage == null)
+            float distance = Vector3.Distance(ennemy.transform.position, ennemy._personnage.transform.position);
+
+            // Si joueur trop loin, retourne à repos
+            if (distance > loseDistance)
             {
                 ennemy.ChangerEtat(ennemy.repos);
                 yield break;
             }
-
-            Vector3 target = ennemy._personnage.transform.position;
-            ennemy._agentNavigation.SetDestination(target);
-
-            float distance = Vector3.Distance(ennemy.transform.position, target);
-
-            if (distance < 2f)
+            // Si joueur proche, attaque
+            else if (distance <= attackDistance)
             {
                 ennemy.ChangerEtat(ennemy.attaque);
                 yield break;
             }
-
-            if (distance > 15f)
+            else
             {
-                ennemy.ChangerEtat(ennemy.repos);
-                yield break;
+                // Se déplacer vers le joueur
+                if (ennemy._agentNavigation != null)
+                    ennemy._agentNavigation.SetDestination(ennemy._personnage.transform.position);
             }
 
-            yield return null;
+            yield return new WaitForSeconds(0.2f);
         }
     }
 }

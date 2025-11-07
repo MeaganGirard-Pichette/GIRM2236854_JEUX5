@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class EnnemyEtatManager : MonoBehaviour
 {
-    private EnnemyEtatBase _etatActuel;
+    public EnnemyEtatBase _etatActuel;
 
     public EnnemyEtatChasse chasse = new EnnemyEtatChasse(); //pourchasser le perso/joueur
     public EnnemieEtatAttaque attaque = new EnnemieEtatAttaque(); //promenade aléatoire ou vers ressources
