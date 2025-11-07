@@ -107,7 +107,7 @@ public class GenerateurÎle : MonoBehaviour
         List<Material> tpBiome = new List<Material>();
         do
         {
-            Material mats = (Material)Resources.Load("mats/b" + nbBiomes + "_" + nbVariant);
+            Material mats = (Material)Resources.Load("Items/b" + nbBiomes + "_" + nbVariant);
             if (mats)
             {
                 tpBiome.Add((Material)mats);
@@ -440,6 +440,7 @@ public class GenerateurÎle : MonoBehaviour
             GameObject nouveauPersonnage = Instantiate(_prefabPersonnage, positionPersonnage, Quaternion.identity);
             nouveauPersonnage.name = $"Personnage_{i + 1}";// Nommer le personnage pour identification
             nouveauPersonnage.transform.parent = this.transform;// Parentage pour organisation dans la hiérarchie
+
         }
     }
 

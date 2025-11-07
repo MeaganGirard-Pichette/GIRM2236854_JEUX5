@@ -25,6 +25,8 @@ public class EnnemyEtatRepos : EnnemyEtatBase
 
     public IEnumerator CoroutineRepos(EnnemyEtatManager ennemy)
     {
+
+        
         float detectionDistance = 10f;
 
         while (ennemy._etatActuel == this)
