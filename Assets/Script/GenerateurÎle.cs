@@ -107,7 +107,7 @@ public class GenerateurÎle : MonoBehaviour
         List<Material> tpBiome = new List<Material>();
         do
         {
-            Material mats = (Material)Resources.Load("Items/b" + nbBiomes + "_" + nbVariant);
+            Material mats = (Material)Resources.Load("mats/b" + nbBiomes + "_" + nbVariant);
             if (mats)
             {
                 tpBiome.Add((Material)mats);
@@ -157,9 +157,7 @@ public class GenerateurÎle : MonoBehaviour
         // unTerrain = Aquaformation(unTerrain);
 
         // 3. Instanciation des cubes de manière asynchrone pour éviter les blocages
-        // StartCoroutine(InstantierCubes(onIsLand));
-        StartCoroutine(InstantierCubes(onIsLand, oneBiomeMap, onVariantMap));
-
+        InstantierCubes(onIsLand, oneBiomeMap, onVariantMap);
         // PlacerPersos(_nombrePersonnages);
     }
 
@@ -281,7 +279,7 @@ public class GenerateurÎle : MonoBehaviour
     /// </summary>
     /// <param name="terrain">Tableau 2D contenant les hauteurs normalisées du terrain</param>
     /// <returns>IEnumerator pour la coroutine</returns>
-    private IEnumerator InstantierCubes(float[,] terrain, float[,] mapBiome, float[,] mapVariant)
+    private void InstantierCubes(float[,] terrain, float[,] mapBiome, float[,] mapVariant)
     {
         int largeur = terrain.GetLength(0);
         int profondeur = terrain.GetLength(1);
@@ -319,12 +317,10 @@ public class GenerateurÎle : MonoBehaviour
                     // Debug.Log("Biome:" + (quelBiomes + 1) + " Variante:" + (quelVariante + 1));
                     unCube.transform.parent = this.transform;// Attachment du cube comme enfant de ce GameObject pour l'organisation
 
-                    GetComponent<NavMeshSurface>().BuildNavMesh();
 
                 }
             }
             // Pause configurable entre chaque ligne pour permettre l'affichage progressif
-            // yield return new WaitForSeconds(generateDelay);
         }
 
         // Phase de finalisation : reconfirmation des couleurs de tous les cubes
@@ -344,7 +340,7 @@ public class GenerateurÎle : MonoBehaviour
         }
 
         // 4. Placement automatique des personnages après génération des cubes
-        yield return null;
+        GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
     /// <summary>

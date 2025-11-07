@@ -25,8 +25,8 @@ public class EnnemieEtatAttaque : EnnemyEtatBase
 
     public IEnumerator CoroutineAttaque(EnnemyEtatManager ennemy)
     {
-        float attackDistance = 2f;
-        float chaseDistance = 10f;
+        float attackDistance = 10f;
+        float chaseDistance = 300f;
 
         while (ennemy._etatActuel == this && ennemy._personnage != null)
         {
