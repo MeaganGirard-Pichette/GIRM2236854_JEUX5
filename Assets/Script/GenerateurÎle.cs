@@ -158,7 +158,8 @@ public class GenerateurÎle : MonoBehaviour
 
         // 3. Instanciation des cubes de manière asynchrone pour éviter les blocages
         // StartCoroutine(InstantierCubes(onIsLand));
-        InstantierCubes(onIsLand, oneBiomeMap, onVariantMap);
+        StartCoroutine(InstantierCubes(onIsLand, oneBiomeMap, onVariantMap));
+
         // PlacerPersos(_nombrePersonnages);
     }
 
@@ -280,7 +281,7 @@ public class GenerateurÎle : MonoBehaviour
     /// </summary>
     /// <param name="terrain">Tableau 2D contenant les hauteurs normalisées du terrain</param>
     /// <returns>IEnumerator pour la coroutine</returns>
-    private void InstantierCubes(float[,] terrain, float[,] mapBiome, float[,] mapVariant)
+    private IEnumerator InstantierCubes(float[,] terrain, float[,] mapBiome, float[,] mapVariant)
     {
         int largeur = terrain.GetLength(0);
         int profondeur = terrain.GetLength(1);
@@ -343,7 +344,7 @@ public class GenerateurÎle : MonoBehaviour
         }
 
         // 4. Placement automatique des personnages après génération des cubes
-
+        yield return null;
     }
 
     /// <summary>
